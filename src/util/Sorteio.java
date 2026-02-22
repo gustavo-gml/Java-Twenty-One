@@ -7,10 +7,10 @@ public class Sorteio {
     
     // Função que retorna um número de 1 a 13
     public static int sortearCarta(ArrayList<Integer> baralho, ArrayList<Integer> cartasUsadas) {
-        Integer pilha = baralho.getFirst();
+        int pilha = baralho.get(0);
 
-        cartasUsadas.add(baralho.getFirst());
-        baralho.remove(baralho.getFirst());
+        cartasUsadas.add(baralho.get(0));
+        baralho.remove(baralho.get(0));
         
         return pilha;
     }
