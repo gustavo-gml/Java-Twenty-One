@@ -1,5 +1,6 @@
 package entities;
 
+
 public class Player {
    //**Atributos
    private String name;
@@ -58,4 +59,9 @@ public class Player {
                 ", roundsWon=" + roundsWon +
                 ", matchesWon=" + matchesWon;
     }
+
+    //serve para zerar a quantidade de rodadas vencidas por um jogador quando um jogador vence a partida, para que a contagem de rodadas seja reiniciada para a próxima partida.
+    public void resetRoundsWon() { 
+    this.roundsWon = 0;
+}
 }
