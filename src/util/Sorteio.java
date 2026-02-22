@@ -1,4 +1,4 @@
-package entities;
+package util;
 
 import java.util.ArrayList;
 import java.util.Random;
