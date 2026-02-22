@@ -1,4 +1,5 @@
 import entities.Player;
+import util.Pause;
 import util.Sorteio;
 import util.FaceCards;
 import java.util.ArrayList;
@@ -27,25 +28,23 @@ public class Main {
         }
         System.out.println("\n");
 
-        //TODO--------------------Nome do Jogador e quantidade de bots----------------------
+        //--------------------Nome do Jogador e quantidade de bots----------------------
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite seu nome:");
+        System.out.print("Digite o seu nome: ");
         String nome = sc.nextLine();
 
 
-        System.out.println("Digite a quantidade de bots (1 a 6):");
+        System.out.print("Digite a quantidade de bots (min. 1 e max. 6): ");
 
-        int qntBots = 0;
+        int qntBots = Integer.parseInt(sc.nextLine());
 
         while (qntBots < 1 || qntBots > 6) {
-            qntBots = sc.nextInt();
-
-            if (qntBots < 1 || qntBots > 6) {
-                System.out.println("Valor inválido. Digite um número entre 1 e 6:");
-            }
+            System.out.println("Valor inválido. Digite um número entre 1 e 6:");
+            qntBots = Integer.parseInt(sc.nextLine());
         }
 
-        sc.nextLine();
+
+
 
 
 
@@ -56,7 +55,7 @@ public class Main {
 
 
         //------------------Instanciação de objetos "player" na lista players-----------
-        for (int i = 0; i < 4; i++) { // limite será atualizado conforme a variavel de quantidade de jogadores
+        for (int i = 0; i <= qntBots; i++) { // limite será atualizado conforme a variavel de quantidade de jogadores
             if (i == 0) {
                 players.add(new Player(nome));
                 continue;
@@ -86,49 +85,61 @@ public class Main {
 
 
 
-        //TODO-------------------------Lógica de compra do player--------------------------
+        //-------------------------Lógica de compra do player--------------------------
 
 
         Player player = players.get(0);
 
-        System.out.println("\n=== SUA VEZ ===");
+        System.out.println("\n=== SUA VEZ "+ nome +"! ===");
 
         while (true) {
-
-            if (player.getPoints() > 21) {
-                System.out.println("💥 Você já estourou!");
-                break;
-            }
-
             System.out.println("Total atual: " + player.getPoints());
-            System.out.println("Mais uma ou Parar?");
+            System.out.println("Digite 'a' ou 'b': ");
+            System.out.println("a - Comprar carta \nb - Parar");
             String opcao = sc.nextLine();
 
-            if (opcao.equalsIgnoreCase("mais")) {
+            if (opcao.equalsIgnoreCase("a")) {
 
                 int carta = Sorteio.sortearCarta(baralho, playerCartas);
 
                 if (carta <= 10) {
                     player.addPoint(carta);
-                    System.out.println("Você comprou: " + carta);
+                    System.out.println("Você comprou: " + carta +"\n");
+                    Pause.pause(2000);
                 } else {
                     player.addPoint(10);
                     System.out.println("Você comprou: " + FaceCards.numberToFace(carta));
+                    Pause.pause(2000);
                 }
 
-            } else if (opcao.equalsIgnoreCase("parar")) {
+            } else if (opcao.equalsIgnoreCase("b")) {
+                System.out.println("  🙅‍♂️ Parou!\n");
+                Pause.pause(2000);
                 break;
             } else {
                 System.out.println("Opção inválida.");
             }
+
+            if (player.getPoints() == 21){
+                System.out.println("  🎉 FEZ 21!\n");
+                Pause.pause(2000);
+                break;
+            }
+            else if (player.getPoints() > 21) {
+                System.out.println("  💥 ESTOUROU!\n");
+                Pause.pause(2000);
+                break;
+            }
         }
+
+
 
 
 
         //-------------------------Lógica de compra dos Bots---------------------------
         System.out.println("Turno dos BOTS");
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i <= qntBots; i++) {
             if (i == 0) {
                 continue; // Pula o Player
             }
@@ -169,7 +180,7 @@ public class Main {
 
 
 
-
+        sc.close();
     }
 }
 
