@@ -234,6 +234,7 @@ public class Main {
 
             System.out.println("\nPressione a tecla 'Enter' para continuar");
             sc.nextLine();
+            sc.reset();
             System.out.println("\n\n\n\n\n");
 
         /* -------- Verificar vitória da PARTIDA -------- */
@@ -250,6 +251,7 @@ public class Main {
 
             if (resp.equalsIgnoreCase("N")) {
                 jogando = false;
+                sc.close();
             } else {
                 // reset para nova partida
                 for (Player r : players) {
