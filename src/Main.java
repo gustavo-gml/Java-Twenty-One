@@ -4,6 +4,7 @@ import util.FaceCards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -27,6 +28,26 @@ public class Main {
         System.out.println("\n");
 
         //TODO--------------------Nome do Jogador e quantidade de bots----------------------
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite seu nome:");
+        String nome = sc.nextLine();
+
+
+        System.out.println("Digite a quantidade de bots (1 a 6):");
+
+        int qntBots = 0;
+
+        while (qntBots < 1 || qntBots > 6) {
+            qntBots = sc.nextInt();
+
+            if (qntBots < 1 || qntBots > 6) {
+                System.out.println("Valor inválido. Digite um número entre 1 e 6:");
+            }
+        }
+
+        sc.nextLine();
+
+
 
 
 
@@ -37,7 +58,7 @@ public class Main {
         //------------------Instanciação de objetos "player" na lista players-----------
         for (int i = 0; i < 4; i++) { // limite será atualizado conforme a variavel de quantidade de jogadores
             if (i == 0) {
-                players.add(new Player("playerNamePlaceholder"));
+                players.add(new Player(nome));
                 continue;
             }
             players.add(new Player("Bot " + i));
@@ -68,11 +89,39 @@ public class Main {
         //TODO-------------------------Lógica de compra do player--------------------------
 
 
+        Player player = players.get(0);
 
+        System.out.println("\n=== SUA VEZ ===");
 
+        while (true) {
 
+            if (player.getPoints() > 21) {
+                System.out.println("💥 Você já estourou!");
+                break;
+            }
 
+            System.out.println("Total atual: " + player.getPoints());
+            System.out.println("Mais uma ou Parar?");
+            String opcao = sc.nextLine();
 
+            if (opcao.equalsIgnoreCase("mais")) {
+
+                int carta = Sorteio.sortearCarta(baralho, playerCartas);
+
+                if (carta <= 10) {
+                    player.addPoint(carta);
+                    System.out.println("Você comprou: " + carta);
+                } else {
+                    player.addPoint(10);
+                    System.out.println("Você comprou: " + FaceCards.numberToFace(carta));
+                }
+
+            } else if (opcao.equalsIgnoreCase("parar")) {
+                break;
+            } else {
+                System.out.println("Opção inválida.");
+            }
+        }
 
 
 
